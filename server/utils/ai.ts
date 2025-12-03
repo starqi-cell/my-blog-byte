@@ -1,0 +1,82 @@
+import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const AI_API_KEY = process.env.AI_API_KEY || '';
+const AI_API_URL = process.env.AI_API_URL || 'https://api.openai.com/v1/chat/completions';
+
+export interface AIGenerateOptions {
+  type: 'content' | 'summary' | 'title';
+  input: string;
+  language?: string;
+}
+
+export async function generateWithAI(options: AIGenerateOptions): Promise<string> {
+  const { type, input, language = 'zh-CN' } = options;
+
+  let prompt = '';
+  
+  switch (type) {
+    case 'content':
+      prompt = `请根据以下标题或关键词，生成一篇博客文章的内容（使用 Markdown 格式）：\n\n${input}\n\n要求：\n1. 内容详实、结构清晰\n2. 包含引言、正文、总结\n3. 适当使用标题、列表等格式\n4. 字数在 800-1500 字之间`;
+      break;
+    case 'summary':
+      prompt = `请为以下文章生成一段简洁的摘要（100-200字）：\n\n${input}`;
+      break;
+    case 'title':
+      prompt = `请根据以下内容，生成 5 个合适的博客文章标题：\n\n${input}\n\n要求：\n1. 标题简洁有力\n2. 吸引读者点击\n3. 准确反映内容`;
+      break;
+  }
+
+  // 如果没有配置 AI API，返回模拟数据
+  if (!AI_API_KEY) {
+    return generateMockAI(type, input);
+  }
+
+  try {
+    const response = await axios.post(
+      AI_API_URL,
+      {
+        model: 'gpt-3.5-turbo',
+        messages: [
+          {
+            role: 'system',
+            content: `你是一个专业的技术博客写作助手，擅长生成高质量的技术文章内容。请使用${language === 'zh-CN' ? '中文' : '英文'}回复。`,
+          },
+          {
+            role: 'user',
+            content: prompt,
+          },
+        ],
+        temperature: 0.7,
+        max_tokens: 2000,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${AI_API_KEY}`,
+        },
+        timeout: 30000,
+      }
+    );
+
+    return response.data.choices[0]?.message?.content || '生成失败';
+  } catch (error) {
+    console.error('AI 生成错误:', error);
+    return generateMockAI(type, input);
+  }
+}
+
+function generateMockAI(type: string, input: string): string {
+  switch (type) {
+    case 'content':
+      return `# ${input}\n\n## 引言\n\n这是一篇关于"${input}"的技术文章。在现代 Web 开发中，这个主题非常重要。\n\n## 核心内容\n\n### 1. 基础概念\n\n首先，我们需要了解基础概念和原理。\n\n### 2. 实践应用\n\n在实际项目中，我们可以这样应用：\n\n\`\`\`javascript\n// 示例代码\nconst example = () => {\n  console.log('Hello World');\n};\n\`\`\`\n\n### 3. 最佳实践\n\n遵循以下最佳实践可以提高代码质量：\n- 保持代码简洁\n- 注重性能优化\n- 编写测试用例\n\n## 总结\n\n通过本文的学习，我们掌握了相关知识和技能。希望对你有所帮助！`;
+    case 'summary':
+      return `本文深入探讨了"${input.substring(0, 20)}..."的相关内容，从基础概念到实践应用，为读者提供了全面的技术指导。`;
+    case 'title':
+      return `1. 深入理解 ${input}\n2. ${input} 完全指南\n3. 从零开始学习 ${input}\n4. ${input} 最佳实践\n5. ${input} 实战教程`;
+    default:
+      return '生成失败';
+  }
+}
