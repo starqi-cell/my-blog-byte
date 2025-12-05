@@ -1,6 +1,6 @@
-# My SSR Blog System
+# My SSR Blog
 
-一个功能完整的全栈 SSR 博客系统，基于 React + Express + MySQL + Redis 构建。
+一个全栈 SSR 博客系统，基于 React + Express + MySQL + Redis 构建。
 
 ##  功能特性
 
