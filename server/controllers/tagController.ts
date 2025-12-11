@@ -1,9 +1,15 @@
 import { Request, Response } from 'express';
 import { TagModel } from '../models/Tag.js';
 
-export async function getTags(_req: Request, res: Response) {
+export async function getTags(req: Request, res: Response) {
   try {
-    const tags = await TagModel.findAll();
+    const { withCount } = req.query;
+    
+    // 如果需要文章数量统计（用于标签云），使用 findAllWithCount
+    const tags = withCount === 'true' 
+      ? await TagModel.findAllWithCount()
+      : await TagModel.findAll();
+    
     res.json(tags);
   } catch (error) {
     console.error('获取标签列表错误:', error);

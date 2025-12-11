@@ -73,7 +73,12 @@ export async function createArticle(req: Request, res: Response) {
 
     // 添加标签
     if (tags && Array.isArray(tags) && tags.length > 0) {
-      await ArticleModel.addTags(articleId, tags);
+      // 检查是否是标签名称数组（字符串）还是标签 ID 数组（数字）
+      if (typeof tags[0] === 'string') {
+        await ArticleModel.addTagsByNames(articleId, tags);
+      } else {
+        await ArticleModel.addTags(articleId, tags);
+      }
     }
 
     // 清除相关缓存
@@ -124,7 +129,12 @@ export async function updateArticle(req: Request, res: Response) {
     if (tags !== undefined && Array.isArray(tags)) {
       await ArticleModel.removeTags(parseInt(id));
       if (tags.length > 0) {
-        await ArticleModel.addTags(parseInt(id), tags);
+        // 检查是否是标签名称数组（字符串）还是标签 ID 数组（数字）
+        if (typeof tags[0] === 'string') {
+          await ArticleModel.addTagsByNames(parseInt(id), tags);
+        } else {
+          await ArticleModel.addTags(parseInt(id), tags);
+        }
       }
     }
 

@@ -14,6 +14,7 @@ import tagRoutes from './routes/tags.js';
 import commentRoutes from './routes/comments.js';
 import aiRoutes from './routes/ai.js';
 import uploadRoutes from './routes/upload.js';
+import animeRoutes from './routes/anime.js';
 
 // 限流中间件
 import { generalLimiter } from './middleware/rateLimit.js';
@@ -72,6 +73,7 @@ app.use('/api/tags', tagRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/anime', animeRoutes);
 
 // 健康检查
 app.get('/api/health', (_req: Request, res: Response) => {
@@ -106,9 +108,14 @@ async function bootstrap() {
     getPool();
     console.log('✅ MySQL 已连接');
 
-    // 连接 Redis
-    await getRedisClient();
-    console.log('✅ Redis 已连接');
+    // 连接 Redis（可选，失败不影响服务器启动）
+    try {
+      await getRedisClient();
+      console.log('✅ Redis 已连接');
+    } catch (redisError) {
+      console.warn('⚠️  Redis 连接失败，缓存功能将被禁用:', redisError instanceof Error ? redisError.message : redisError);
+      console.log('ℹ️  服务器将继续运行，但缓存功能不可用');
+    }
 
     // 启动服务器
     app.listen(PORT, () => {

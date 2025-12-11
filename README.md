@@ -1,6 +1,6 @@
 # My SSR Blog System
 
-一个功能完整的全栈 SSR 博客系统，基于 React + Express + MySQL + Redis 构建。
+本人参加字节青训营做的一个全栈 SSR 博客系统，基于 React + Express + MySQL + Redis 构建。
 
 ## ✨ 功能特性
 
@@ -10,7 +10,7 @@
 - ✅ **MySQL 数据库** - 持久化存储，支持事务和全文搜索
 - ✅ **Redux 状态管理** - 前端状态统一管理
 - ✅ **TypeScript** - 全栈类型安全，减少运行时错误
-- ✅ **Ant Design UI** - 企业级 UI 组件库
+- ✅ **Ant Design UI** - 著名 UI 组件库
 - ✅ **Styled Components** - CSS-in-JS 样式方案
 - ✅ **Hash 路由** - 客户端路由系统
 
@@ -21,7 +21,7 @@
 - ✅ **AI 写作助手** - 集成 AI 辅助内容生成
 - ✅ **JWT 认证** - 安全的用户身份验证
 - ✅ **权限控制** - 管理员 / 普通用户角色分离
-- ✅ **接口限流** - 防止 API 被恶意刷取（express-rate-limit）
+- ✅ **接口限流** - 防止 API 被恶意刷取
 - ✅ **Markdown 编辑器** - 支持实时预览
 - ✅ **暗黑模式** - 深色主题切换
 - ✅ **评论系统** - 支持多级嵌套回复
@@ -33,8 +33,6 @@
 ### ⚡ 性能优化
 - ✅ **代码分割** - React.lazy + Suspense 路由懒加载
 - ✅ **图片懒加载** - SSR 兼容的图片延迟加载
-- ✅ **MySQL 优化** - 索引优化、查询缓存
-- ✅ **Gzip 压缩** - 静态资源压缩传输
 - ✅ **CDN 缓存** - 生产环境静态资源 1 年缓存
 
 ### 🎨 拓展功能
@@ -75,8 +73,9 @@ npm install
 
 2. 配置环境变量
 ```bash
-cp .env.example .env
 # 编辑 .env 文件，配置数据库和 Redis 连接信息
+cp .env.example .env
+
 ```
 
 3. 启动 MySQL 和 Redis（使用 Docker）
@@ -183,30 +182,3 @@ my-ssr-blog/
 ### AI 助手
 - `POST /api/ai/generate` - AI 生成文章内容（需认证）
 
-## 开发指南
-
-### 添加新页面
-1. 在 `client/pages` 创建页面组件
-2. 在 `client/App.tsx` 添加路由
-3. 在 `server/entry-server.tsx` 添加 SSR 支持
-
-### 添加新 API
-1. 在 `server/controllers` 创建控制器
-2. 在 `server/routes` 添加路由
-3. 在 `server/models` 添加数据模型（如需要）
-
-### 状态管理
-使用 Redux Toolkit，在 `client/store/slices` 添加新的 slice
-
-## 性能优化
-
-- 代码分割（Code Splitting）
-- 图片懒加载
-- MySQL 查询优化
-- Redis 缓存热点数据
-- HTTP/2 Server Push
-- Gzip 压缩
-
-## License
-
-MIT

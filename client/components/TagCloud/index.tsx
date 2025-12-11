@@ -45,7 +45,7 @@ const TagCloud: React.FC<TagCloudProps> = ({
   const { items: tags, loading } = useAppSelector((state) => state.tags as any);
 
   useEffect(() => {
-    dispatch(fetchTags());
+    dispatch(fetchTags(true)); // 请求带文章数量统计的标签
   }, [dispatch]);
 
   const handleTagClick = (tagId: number, _tagName: string) => {
@@ -56,20 +56,23 @@ const TagCloud: React.FC<TagCloudProps> = ({
   // 计算标签大小（基于文章数量）
   const getTagSize = (articleCount: number, maxCount: number) => {
     if (maxCount === 0) return 14;
-    // 字体大小范围：12px - 24px
+    // 字体大小范围：12px - 16px
     const ratio = articleCount / maxCount;
-    return 12 + ratio * 12;
+    return 12 + ratio * 4;
   };
 
+  // 过滤掉没有文章的标签
+  const tagsWithArticles = tags.filter((tag: any) => (tag.article_count || 0) > 0);
+
   // 获取最多文章的标签数量
-  const maxArticleCount = Math.max(...tags.map((tag: any) => tag.article_count || 0), 1);
+  const maxArticleCount = Math.max(...tagsWithArticles.map((tag: any) => tag.article_count || 0), 1);
 
   // 随机打乱标签顺序，增加视觉趣味性
-  const shuffledTags = [...tags]
+  const shuffledTags = [...tagsWithArticles]
     .sort(() => Math.random() - 0.5)
     .slice(0, maxTags);
 
-  if (tags.length === 0) {
+  if (tagsWithArticles.length === 0) {
     return null;
   }
 

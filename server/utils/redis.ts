@@ -11,19 +11,25 @@ export async function getRedisClient(): Promise<RedisClientType> {
       socket: {
         host: process.env.REDIS_HOST || 'localhost',
         port: parseInt(process.env.REDIS_PORT || '6379'),
+        connectTimeout: 5000, // 5秒超时
       },
       password: process.env.REDIS_PASSWORD || undefined,
     });
 
     redisClient.on('error', (err) => {
-      console.error('❌ Redis 连接错误:', err);
+      console.error('❌ Redis 连接错误:', err.message);
     });
 
     redisClient.on('connect', () => {
       console.log('✅ Redis 已连接');
     });
 
-    await redisClient.connect();
+    try {
+      await redisClient.connect();
+    } catch (error) {
+      redisClient = null;
+      throw error;
+    }
   }
 
   return redisClient;
@@ -31,6 +37,9 @@ export async function getRedisClient(): Promise<RedisClientType> {
 
 export async function cacheGet<T = any>(key: string): Promise<T | null> {
   try {
+    if (!redisClient) {
+      return null; // Redis 不可用时返回 null
+    }
     const client = await getRedisClient();
     const data = await client.get(key);
     return data ? JSON.parse(data) : null;
@@ -46,6 +55,9 @@ export async function cacheSet(
   ttl: number = 3600
 ): Promise<void> {
   try {
+    if (!redisClient) {
+      return; // Redis 不可用时静默返回
+    }
     const client = await getRedisClient();
     await client.setEx(key, ttl, JSON.stringify(value));
   } catch (error) {
@@ -55,6 +67,9 @@ export async function cacheSet(
 
 export async function cacheDel(pattern: string): Promise<void> {
   try {
+    if (!redisClient) {
+      return; // Redis 不可用时静默返回
+    }
     const client = await getRedisClient();
     const keys = await client.keys(pattern);
     if (keys.length > 0) {
@@ -67,8 +82,13 @@ export async function cacheDel(pattern: string): Promise<void> {
 
 export async function closeRedis(): Promise<void> {
   if (redisClient) {
-    await redisClient.quit();
-    redisClient = null;
-    console.log('✅ Redis 连接已关闭');
+    try {
+      await redisClient.quit();
+      redisClient = null;
+      console.log('✅ Redis 已断开');
+    } catch (error) {
+      console.error('Redis 关闭错误:', error);
+      redisClient = null;
+    }
   }
 }

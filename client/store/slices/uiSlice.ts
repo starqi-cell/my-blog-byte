@@ -1,14 +1,15 @@
+// client/store/slices/uiSlice.ts
+// UI 状态切片，管理主题和加载状态
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UIState {
   theme: 'light' | 'dark';
-  sidebarCollapsed: boolean;
   loading: boolean;
 }
 
 const initialState: UIState = {
   theme: (typeof window !== 'undefined' ? localStorage.getItem('theme') : 'light') as 'light' | 'dark' || 'light',
-  sidebarCollapsed: false,
   loading: false,
 };
 
@@ -28,14 +29,11 @@ const uiSlice = createSlice({
         localStorage.setItem('theme', action.payload);
       }
     },
-    toggleSidebar: (state) => {
-      state.sidebarCollapsed = !state.sidebarCollapsed;
-    },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
   },
 });
 
-export const { toggleTheme, setTheme, toggleSidebar, setLoading } = uiSlice.actions;
+export const { toggleTheme, setTheme, setLoading } = uiSlice.actions;
 export default uiSlice.reducer;

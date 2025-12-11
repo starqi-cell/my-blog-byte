@@ -82,6 +82,43 @@ CREATE TABLE IF NOT EXISTS comments (
 INSERT INTO users (username, email, password, role) VALUES
 ('admin', 'admin@blog.com', '$2b$10$0NXtJPLnwRJ4m0AVP45ZNeIHD6yhj.edSQKuTOUC4b4gqqZXmgFge', 'admin');
 
+-- 动漫表
+CREATE TABLE IF NOT EXISTS anime (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  uid VARCHAR(50) UNIQUE NOT NULL,
+  cn_name VARCHAR(200) NOT NULL,
+  original_title VARCHAR(200),
+  aliases TEXT,
+  cover_url VARCHAR(500),
+  plot TEXT,
+  tags VARCHAR(500),
+  studio VARCHAR(200),
+  source VARCHAR(100),
+  original_author VARCHAR(200),
+  writer VARCHAR(200),
+  director VARCHAR(200),
+  anime_class ENUM('TV', 'FILM', 'OVA', 'ONA') NOT NULL,
+  country VARCHAR(50),
+  air_date VARCHAR(50),
+  episodes VARCHAR(50),
+  rating DECIMAL(3, 1),
+  my_rating DECIMAL(3, 1),
+  watch_date DATE,
+  website VARCHAR(500),
+  cast TEXT,
+  media_source ENUM('bangumi') DEFAULT 'bangumi',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_uid (uid),
+  INDEX idx_cn_name (cn_name),
+  INDEX idx_anime_class (anime_class),
+  INDEX idx_country (country),
+  INDEX idx_air_date (air_date),
+  INDEX idx_rating (rating),
+  INDEX idx_my_rating (my_rating),
+  FULLTEXT idx_search (cn_name, original_title, aliases)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- 插入示例标签
 INSERT INTO tags (name, color) VALUES
 ('JavaScript', '#f7df1e'),

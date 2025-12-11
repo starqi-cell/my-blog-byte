@@ -1,9 +1,13 @@
+// client/store/index.ts
+// Redux 存储配置
+
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './slices/authSlice.js';
 import articlesReducer from './slices/articlesSlice.js';
 import tagsReducer from './slices/tagsSlice.js';
 import commentsReducer from './slices/commentsSlice.js';
 import uiReducer from './slices/uiSlice.js';
+import animeReducer from './slices/animeSlice.js';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +16,7 @@ export const store = configureStore({
     tags: tagsReducer,
     comments: commentsReducer,
     ui: uiReducer,
+    anime: animeReducer,
   },
 });
 

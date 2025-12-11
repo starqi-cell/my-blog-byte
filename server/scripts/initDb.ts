@@ -20,14 +20,14 @@ async function initDatabase() {
       multipleStatements: true,
     });
 
-    console.log('✅ 已连接到 MySQL');
+    console.log('已连接到 MySQL');
 
     // 读取并执行初始化 SQL
     const sqlPath = path.resolve(__dirname, './init.sql');
     const sql = fs.readFileSync(sqlPath, 'utf8');
 
     await connection.query(sql);
-    console.log('✅ 数据库初始化成功');
+    console.log('数据库初始化成功');
 
     await connection.end();
     console.log('✅ 数据库连接已关闭');

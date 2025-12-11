@@ -16,10 +16,16 @@ const initialState: TagsState = {
   error: null,
 };
 
-export const fetchTags = createAsyncThunk('tags/fetchAll', async () => {
-  const response = await axios.get<Tag[]>(`${API_BASE}/tags`);
-  return response.data;
-});
+export const fetchTags = createAsyncThunk(
+  'tags/fetchAll', 
+  async (withCount: boolean = false) => {
+    const url = withCount 
+      ? `${API_BASE}/tags?withCount=true`
+      : `${API_BASE}/tags`;
+    const response = await axios.get<Tag[]>(url);
+    return response.data;
+  }
+);
 
 export const createTag = createAsyncThunk(
   'tags/create',

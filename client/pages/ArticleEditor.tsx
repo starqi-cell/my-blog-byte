@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { createArticle, updateArticle, fetchArticleById } from '@/store/slices/articlesSlice';
 import { fetchTags } from '@/store/slices/tagsSlice';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
+import AIAssistant from '@/components/AIAssistant';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -50,10 +51,12 @@ const ArticleEditor: React.FC = () => {
   const [aiLoading, setAiLoading] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [coverImageUrl, setCoverImageUrl] = useState('');
+  const [aiAssistantVisible, setAiAssistantVisible] = useState(false);
+  const [selectedText, setSelectedText] = useState('');
   const isEdit = !!id;
 
   useEffect(() => {
-    dispatch(fetchTags());
+    dispatch(fetchTags(false));
     if (id) {
       dispatch(fetchArticleById(parseInt(id)));
     }
@@ -67,7 +70,7 @@ const ArticleEditor: React.FC = () => {
         summary: currentArticle.summary,
         cover_image: currentArticle.cover_image,
         status: currentArticle.status,
-        tags: currentArticle.tags?.map((t) => t.id),
+        tags: currentArticle.tags?.map((t) => t.name),
       });
       setContent(currentArticle.content);
       setCoverImageUrl(currentArticle.cover_image || '');
@@ -76,6 +79,32 @@ const ArticleEditor: React.FC = () => {
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
+  };
+
+  const handleOpenAIAssistant = () => {
+    // 获取选中文本
+    const textarea = document.querySelector('textarea[placeholder*="Markdown"]') as HTMLTextAreaElement;
+    if (textarea) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      if (start !== end) {
+        setSelectedText(content.substring(start, end));
+      } else {
+        setSelectedText('');
+      }
+    }
+    setAiAssistantVisible(true);
+  };
+
+  const handleInsertAIContent = (text: string) => {
+    const textarea = document.querySelector('textarea[placeholder*="Markdown"]') as HTMLTextAreaElement;
+    if (textarea) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const newContent = content.substring(0, start) + '\n' + text + '\n' + content.substring(end);
+      setContent(newContent);
+      form.setFieldsValue({ content: newContent });
+    }
   };
 
   const handleImageUpload = async (file: File, type: 'cover' | 'content') => {
@@ -206,7 +235,14 @@ const ArticleEditor: React.FC = () => {
 
         <EditorGrid>
           <div>
-            <div style={{ marginBottom: 16, display: 'flex', gap: 8 }}>
+            <div style={{ marginBottom: 16, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              <AIButton
+                type="primary"
+                icon={<RobotOutlined />}
+                onClick={handleOpenAIAssistant}
+              >
+                AI 写作助手
+              </AIButton>
               <AIButton
                 icon={<RobotOutlined />}
                 onClick={() => handleAIGenerate('content')}
@@ -292,9 +328,14 @@ const ArticleEditor: React.FC = () => {
         </Form.Item>
 
         <Form.Item name="tags" label="标签">
-          <Select mode="multiple" placeholder="选择标签（选填）">
+          <Select 
+            mode="tags" 
+            placeholder="输入标签后按回车添加（可自定义）"
+            tokenSeparators={[',']}
+            maxTagCount={10}
+          >
             {tags.map((tag: any) => (
-              <Option key={tag.id} value={tag.id}>
+              <Option key={tag.id} value={tag.name}>
                 {tag.name}
               </Option>
             ))}
@@ -317,6 +358,14 @@ const ArticleEditor: React.FC = () => {
           </Button>
         </Form.Item>
       </Form>
+
+      <AIAssistant
+        visible={aiAssistantVisible}
+        onClose={() => setAiAssistantVisible(false)}
+        onInsert={handleInsertAIContent}
+        selectedText={selectedText}
+        fullContent={content}
+      />
     </EditorContainer>
   );
 };

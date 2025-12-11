@@ -119,8 +119,21 @@ const authSlice = createSlice({
     });
 
     // Profile
+    builder.addCase(fetchProfile.pending, (state) => {
+      state.loading = true;
+    });
     builder.addCase(fetchProfile.fulfilled, (state, action: PayloadAction<User>) => {
+      state.loading = false;
       state.user = action.payload;
+    });
+    builder.addCase(fetchProfile.rejected, (state) => {
+      state.loading = false;
+      // Token 失效，清除登录状态
+      state.user = null;
+      state.token = null;
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('token');
+      }
     });
   },
 });

@@ -6,11 +6,29 @@ export interface Tag extends RowDataPacket {
   name: string;
   color: string;
   created_at: Date;
+  article_count?: number;
 }
 
 export class TagModel {
   static async findAll(): Promise<Tag[]> {
     const sql = 'SELECT * FROM tags ORDER BY name ASC';
+    return await query<Tag[]>(sql);
+  }
+
+  static async findAllWithCount(): Promise<Tag[]> {
+    const sql = `
+      SELECT 
+        t.id,
+        t.name,
+        t.color,
+        t.created_at,
+        COUNT(at.article_id) as article_count
+      FROM tags t
+      LEFT JOIN article_tags at ON t.id = at.tag_id
+      LEFT JOIN articles a ON at.article_id = a.id AND a.status = 'published'
+      GROUP BY t.id, t.name, t.color, t.created_at
+      ORDER BY article_count DESC, t.name ASC
+    `;
     return await query<Tag[]>(sql);
   }
 

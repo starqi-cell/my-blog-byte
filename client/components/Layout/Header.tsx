@@ -92,6 +92,11 @@ const Header: React.FC = () => {
           label: '写文章',
           onClick: () => navigate('/article/create'),
         },
+        {
+          key: 'drafts',
+          label: '草稿箱',
+          onClick: () => navigate('/profile?tab=draft'),
+        },
         ...(user.role === 'admin'
           ? [
               {
@@ -101,6 +106,11 @@ const Header: React.FC = () => {
                 key: 'admin',
                 label: '管理后台',
                 onClick: () => navigate('/admin'),
+              },
+              {
+                key: 'addAnime',
+                label: '添加动漫',
+                onClick: () => navigate('/admin/anime/add'),
               },
             ]
           : []),
@@ -138,6 +148,7 @@ const Header: React.FC = () => {
       <Nav>
         <NavLink to="/">首页</NavLink>
         <NavLink to="/articles">文章</NavLink>
+        <NavLink to="/anime">动漫</NavLink>
         <NavLink to="/about">关于</NavLink>
 
         <Space>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card, Avatar, Descriptions, Button, List, Tag, Tabs, message } from 'antd';
 import { UserOutlined, EditOutlined, FileTextOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
@@ -38,10 +38,11 @@ const ArticleCard = styled(Card)`
 
 const Profile: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { user } = useAppSelector((state) => state.auth);
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState('published');
+  const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'published');
 
   useEffect(() => {
     if (!user) {

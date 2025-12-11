@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
 
 
@@ -11,6 +11,9 @@ const Register = lazy(() => import('../pages/Register'));
 const About = lazy(() => import('../pages/About'));
 const Profile = lazy(() => import('../pages/Profile'));
 const AdminDashboard = lazy(() => import('../pages/AdminDashboard'));
+const AnimeList = lazy(() => import('../pages/AnimeList'));
+const AnimeDetail = lazy(() => import('../pages/AnimeDetail'));
+const AnimeManager = lazy(() => import('../pages/AnimeManager'));
 
 
 const routes:RouteObject[]=[
@@ -53,6 +56,18 @@ const routes:RouteObject[]=[
     {
         path:'/admin',
         element:<AdminDashboard />
+    },
+    {
+        path:'/anime',
+        element:<AnimeList />
+    },
+    {
+        path:'/anime/:id',
+        element:<AnimeDetail />
+    },
+    {
+        path:'/admin/anime/add',
+        element:<AnimeManager />
     }
 ];
 

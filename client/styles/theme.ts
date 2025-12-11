@@ -1,3 +1,6 @@
+// client/styles/theme.ts
+// 主题样式
+
 export const lightTheme = {
   colors: {
     primary: '#1890ff',

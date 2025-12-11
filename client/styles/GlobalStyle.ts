@@ -1,3 +1,6 @@
+// client/styles/GlobalStyle.ts
+// 全局样式
+
 import { createGlobalStyle } from 'styled-components';
 import type { Theme } from './theme';
 
@@ -124,7 +127,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
     }
   }
 
-  /* 滚动条样式 */
+  /* 滚动条 */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;

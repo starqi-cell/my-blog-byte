@@ -206,6 +206,34 @@ export class ArticleModel {
     await query(sql);
   }
 
+  static async addTagsByNames(articleId: number, tagNames: string[]): Promise<void> {
+    if (tagNames.length === 0) return;
+
+    const { TagModel } = await import('./Tag.js');
+    const tagIds: number[] = [];
+
+    for (const tagName of tagNames) {
+      const trimmedName = tagName.trim();
+      if (!trimmedName) continue;
+
+      // 查找标签是否存在
+      let tag = await TagModel.findByName(trimmedName);
+      
+      // 如果不存在，创建新标签
+      if (!tag) {
+        const tagId = await TagModel.create({ name: trimmedName });
+        tagIds.push(tagId);
+      } else {
+        tagIds.push(tag.id);
+      }
+    }
+
+    // 添加标签关联
+    if (tagIds.length > 0) {
+      await this.addTags(articleId, tagIds);
+    }
+  }
+
   static async removeTags(articleId: number, tagIds?: number[]): Promise<void> {
     if (tagIds && tagIds.length > 0) {
       const placeholders = tagIds.map(() => '?').join(', ');

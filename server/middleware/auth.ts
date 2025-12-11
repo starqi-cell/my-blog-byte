@@ -38,3 +38,5 @@ export function adminMiddleware(req: AuthRequest, res: Response, next: NextFunct
 // 导出别名以保持兼容性
 export const authenticate = authMiddleware;
 export const requireAdmin = adminMiddleware;
+export const authenticateToken = authMiddleware; // 兼容动漫路由
+export const requireAdminRole = adminMiddleware; // 兼容动漫路由

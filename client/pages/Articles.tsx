@@ -4,6 +4,7 @@ import { Input, Select, Row, Col, Pagination, Spin, Empty } from 'antd';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchArticles } from '@/store/slices/articlesSlice';
+import { fetchTags } from '@/store/slices/tagsSlice';
 import ArticleCard from '@/components/ArticleCard';
 
 const { Search } = Input;
@@ -72,12 +73,17 @@ const LoadingWrapper = styled.div`
 const Articles: React.FC = () => {
   const dispatch = useAppDispatch();
   const { items, loading, total } = useAppSelector((state) => state.articles);
+  const { items: tags } = useAppSelector((state) => state.tags);
   
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(12);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'latest' | 'popular'>('latest');
+
+  useEffect(() => {
+    dispatch(fetchTags(true)); // 获取带文章数量的标签
+  }, [dispatch]);
 
   useEffect(() => {
     loadArticles();
@@ -95,7 +101,7 @@ const Articles: React.FC = () => {
     }
 
     if (categoryFilter && categoryFilter !== 'all') {
-      params.category = categoryFilter;
+      params.tagId = categoryFilter;
     }
 
     if (sortBy === 'popular') {
@@ -156,13 +162,16 @@ const Articles: React.FC = () => {
           size="large"
           value={categoryFilter}
           onChange={handleCategoryChange}
-          placeholder="选择分类"
+          placeholder="选择标签"
         >
-          <Option value="all">全部分类</Option>
-          <Option value="技术">技术</Option>
-          <Option value="生活">生活</Option>
-          <Option value="思考">思考</Option>
-          <Option value="随笔">随笔</Option>
+          <Option value="all">全部标签</Option>
+          {tags
+            .filter((tag: any) => (tag.article_count || 0) > 0)
+            .map((tag: any) => (
+              <Option key={tag.id} value={tag.id}>
+                {tag.name} ({tag.article_count})
+              </Option>
+            ))}
         </StyledSelect>
 
         <StyledSelect
