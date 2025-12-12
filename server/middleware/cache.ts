@@ -8,7 +8,7 @@ export function cacheMiddleware(keyPrefix: string, ttl: number = 300) {
       const cachedData = await cacheGet(cacheKey);
 
       if (cachedData) {
-        console.log(`✅ Cache hit: ${cacheKey}`);
+        console.log(`Cache hit: ${cacheKey}`);
         return res.json(cachedData);
       }
 

@@ -21,16 +21,13 @@ const AppContent: React.FC = () => {
   const { theme: themeMode } = useAppSelector((state) => state.ui);
   const { token, user } = useAppSelector((state) => state.auth);
   const currentTheme = themeMode === 'dark' ? darkTheme : lightTheme;
-  const element = useRoutes(routes);
 
-  // 页面加载时，如果有 token 但没有用户信息，则自动获取用户信息
   useEffect(() => {
     if (token && !user) {
       dispatch(fetchProfile());
     }
   }, [token, user, dispatch]);
   const API_BASE = import.meta.env.VITE_API_BASE || '/api';
-  console.log(API_BASE);
 
   return (
     <ThemeProvider theme={currentTheme}>
@@ -50,7 +47,7 @@ const AppContent: React.FC = () => {
               <Spin size="large" tip="加载中..." />
             </div>
           }>
-            {element}
+            {useRoutes(routes)}
           </Suspense>
         </Layout>
       </ConfigProvider>

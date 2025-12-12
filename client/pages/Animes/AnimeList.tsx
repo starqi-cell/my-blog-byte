@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Input, Select, Row, Col, Pagination, Spin, Empty } from 'antd';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { fetchAnimeList, fetchAnimeStats, setPage } from '../store/slices/animeSlice';
-import AnimeCard from '../components/AnimeCard';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fetchAnimeList, fetchAnimeStats, setPage } from '../../store/slices/animeSlice';
+import AnimeCard from '../../components/AnimeCard';
 
 const { Search } = Input;
 const { Option } = Select;

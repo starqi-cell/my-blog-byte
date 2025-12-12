@@ -1,3 +1,6 @@
+// client/pages/About/styled.ts
+// 关于页面样式
+
 import styled from 'styled-components';
 
 export const AboutContainer = styled.div`

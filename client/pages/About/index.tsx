@@ -1,5 +1,5 @@
-
-
+// client/pages/About/index.tsx
+// 关于页面
 
 import React from 'react';
 import { Card } from 'antd';
@@ -30,17 +30,17 @@ const About: React.FC = () => {
 
           <h2>核心功能</h2>
           <ul>
-            <li>✅ SSR 服务端渲染，提升首屏加载速度和 SEO 友好度</li>
-            <li>✅ 完整的文章 CRUD 操作</li>
-            <li>✅ Markdown 编辑器，支持实时预览</li>
-            <li>✅ AI 写作助手，智能生成内容</li>
-            <li>✅ 用户认证与权限管理</li>
-            <li>✅ 评论系统，支持嵌套回复</li>
-            <li>✅ 标签分类管理</li>
-            <li>✅ 暗黑模式切换</li>
-            <li>✅ Redis 缓存优化</li>
-            <li>✅ HTTP 缓存策略</li>
-            <li>✅ 响应式设计，移动端适配</li>
+            <li>SSR 服务端渲染，提升首屏加载速度和 SEO 友好度</li>
+            <li>完整的文章 CRUD 操作</li>
+            <li>Markdown 编辑器，支持实时预览</li>
+            <li>AI 写作助手，智能生成内容</li>
+            <li>用户认证与权限管理</li>
+            <li>评论系统，支持嵌套回复</li>
+            <li>标签分类管理</li>
+            <li>暗黑模式切换</li>
+            <li>Redis 缓存优化</li>
+            <li>HTTP 缓存策略</li>
+            <li>响应式设计，移动端适配</li>
           </ul>
         </Content>
       </Card>

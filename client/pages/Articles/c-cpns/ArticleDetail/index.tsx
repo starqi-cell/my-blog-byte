@@ -12,7 +12,6 @@ import {
   ArrowLeftOutlined,
   DownloadOutlined,
 } from '@ant-design/icons';
-import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchArticleById, likeArticle, deleteArticle, clearCurrentArticle } from '@/store/slices/articlesSlice';
 import { fetchComments } from '@/store/slices/commentsSlice';
@@ -21,76 +20,18 @@ import Comments from '@/components/Comments';
 import RelatedArticles from '@/components/RelatedArticles';
 import { exportToPDF, exportToMarkdown, exportToText } from '@/utils/export';
 
-const ArticleContainer = styled.div`
-  max-width: 900px;
-  margin: 0 auto;
-  padding: ${({ theme }) => theme.spacing.lg} 0;
-`;
-
-const ArticleHeader = styled.div`
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
-`;
-
-const ArticleTitle = styled.h1`
-  font-size: ${({ theme }) => theme.fontSize.xxxl};
-  margin-bottom: ${({ theme }) => theme.spacing.md};
-  color: ${({ theme }) => theme.colors.text};
-`;
-
-const ArticleMeta = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${({ theme }) => theme.spacing.lg};
-  color: ${({ theme }) => theme.colors.textSecondary};
-  font-size: ${({ theme }) => theme.fontSize.sm};
-  margin: ${({ theme }) => theme.spacing.md} 0;
-`;
-
-const MetaItem = styled.div`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing.sm};
-
-  .anticon {
-    color: ${({ theme }) => theme.colors.primary};
-  }
-`;
-
-const CoverImage = styled.img`
-  width: 100%;
-  max-height: 400px;
-  object-fit: cover;
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
-`;
-
-const ArticleContent = styled(Card)`
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
-`;
-
-const ArticleActions = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: ${({ theme }) => theme.spacing.xl} 0;
-  padding: ${({ theme }) => theme.spacing.lg};
-  background: ${({ theme }) => theme.colors.surface};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-`;
-
-const TagsContainer = styled.div`
-  display: flex;
-  gap: ${({ theme }) => theme.spacing.sm};
-  margin-top: ${({ theme }) => theme.spacing.md};
-`;
-
-const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 400px;
-`;
+import {
+  ArticleContainer,
+  ArticleHeader,
+  ArticleTitle,
+  ArticleMeta,
+  MetaItem,
+  CoverImage,
+  ArticleContent,
+  ArticleActions,
+  TagsContainer,
+  LoadingContainer,
+} from './style';
 
 const ArticleDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -141,7 +82,6 @@ const ArticleDetail: React.FC = () => {
 
   const handleCommentAdded = async () => {
     if (id) {
-      // 等待一小段时间确保数据库已更新，然后重新获取评论
       await new Promise(resolve => setTimeout(resolve, 300));
       await dispatch(fetchComments(parseInt(id))).unwrap();
     }

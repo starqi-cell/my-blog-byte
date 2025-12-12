@@ -6,7 +6,7 @@ import { articleLimiter } from '../middleware/rateLimit.js';
 
 const router = Router();
 
-// 公开路由（带缓存）
+// 公开路由
 router.get('/', cacheMiddleware('articles', 300), articleController.getArticles);
 router.get('/:id', cacheMiddleware('article', 300), articleController.getArticleById);
 

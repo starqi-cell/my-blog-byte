@@ -1,74 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Select, Row, Col, Pagination, Spin, Empty } from 'antd';
+import { Select, Row, Col, Pagination, Spin, Empty } from 'antd';
 
-import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchArticles } from '@/store/slices/articlesSlice';
 import { fetchTags } from '@/store/slices/tagsSlice';
 import ArticleCard from '@/components/ArticleCard';
 
-const { Search } = Input;
+import { Container, PageTitle, FilterBar, StyledSearch, StyledSelect, PaginationWrapper, LoadingWrapper } from './style';
+
 const { Option } = Select;
 
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.lg};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding: ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.md};
-  }
-`;
-
-const PageTitle = styled.h1`
-  font-size: ${({ theme }) => theme.fontSize.xxl};
-  font-weight: ${({ theme }) => theme.fontWeight.bold};
-  color: ${({ theme }) => theme.colors.text};
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
-  text-align: center;
-`;
-
-const FilterBar = styled.div`
-  display: flex;
-  gap: ${({ theme }) => theme.spacing.md};
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
-  flex-wrap: wrap;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    flex-direction: column;
-  }
-`;
-
-const StyledSearch = styled(Search)`
-  flex: 1;
-  min-width: 300px;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    min-width: 100%;
-  }
-`;
-
-const StyledSelect = styled(Select)`
-  min-width: 150px;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    width: 100%;
-  }
-`;
-
-const PaginationWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: ${({ theme }) => theme.spacing.xl};
-  padding: ${({ theme }) => theme.spacing.lg} 0;
-`;
-
-const LoadingWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 400px;
-`;
 
 const Articles: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -82,7 +24,7 @@ const Articles: React.FC = () => {
   const [sortBy, setSortBy] = useState<'latest' | 'popular'>('latest');
 
   useEffect(() => {
-    dispatch(fetchTags(true)); // 获取带文章数量的标签
+    dispatch(fetchTags(true)); 
   }, [dispatch]);
 
   useEffect(() => {
@@ -151,7 +93,7 @@ const Articles: React.FC = () => {
 
       <FilterBar>
         <StyledSearch
-          placeholder="搜索文章标题、内容..."
+          placeholder="搜索"
           allowClear
           enterButton
           size="large"

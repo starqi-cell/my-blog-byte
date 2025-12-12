@@ -158,6 +158,14 @@ const articlesSlice = createSlice({
     builder.addCase(deleteArticle.fulfilled, (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
     });
+
+    builder.addCase(likeArticle.fulfilled, (state, action: PayloadAction<number>) => {
+      const id = action.payload;
+      const article = state.items.find(item => item.id === id);
+      if (article) {
+        article.like_count += 1;
+      }
+    });
   },
 });
 

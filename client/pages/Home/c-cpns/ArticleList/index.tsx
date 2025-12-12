@@ -1,26 +1,16 @@
+// client/pages/Home/c-cpns/ArticleList/index.tsx
+// 文章列表组件
+
 import React from 'react';
-import { List, Pagination, Empty, Spin } from 'antd';
-import styled from 'styled-components';
-import ArticleCard from '../ArticleCard';
+import { List, Empty, Spin } from 'antd';
+
 import type { Article } from '@shared/types';
 
-const ListContainer = styled.div`
-  min-height: 400px;
-`;
+import ArticleCard from '../../../../components/ArticleCard';
+import { LoadingContainer, ListContainer, StyledPagination } from './style';
 
-const StyledPagination = styled(Pagination)`
-  margin-top: ${({ theme }) => theme.spacing.xl};
-  text-align: center;
-`;
 
-const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 400px;
-`;
-
-interface ArticleListProps {
+interface IProps {
   articles: Article[];
   loading?: boolean;
   total?: number;
@@ -29,7 +19,7 @@ interface ArticleListProps {
   onPageChange?: (page: number, pageSize: number) => void;
 }
 
-const ArticleList: React.FC<ArticleListProps> = ({
+const ArticleList: React.FC<IProps> = ({
   articles,
   loading = false,
   total = 0,
@@ -37,6 +27,7 @@ const ArticleList: React.FC<ArticleListProps> = ({
   pageSize = 10,
   onPageChange,
 }) => {
+  
   if (loading) {
     return (
       <LoadingContainer>

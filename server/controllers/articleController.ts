@@ -1,3 +1,6 @@
+// server/controllers/articleController.ts
+// 文章控制器
+
 import { Request, Response } from 'express';
 import { ArticleModel } from '../models/Article.js';
 import { cacheDel } from '../utils/redis.js';
@@ -42,7 +45,6 @@ export async function getArticleById(req: Request, res: Response) {
       return res.status(404).json({ message: '文章不存在' });
     }
 
-    // 增加浏览量
     await ArticleModel.incrementViewCount(parseInt(id));
 
     res.json(article);

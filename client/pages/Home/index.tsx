@@ -1,21 +1,20 @@
 import React, { useEffect } from 'react';
 import { Row, Col } from 'antd';
-import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchArticles } from '@/store/slices/articlesSlice';
-import ArticleList from '@/components/ArticleList';
-import TagCloud from '@/components/TagCloud';
-
-const HomeContainer = styled.div`
-  padding: ${({ theme }) => theme.spacing.lg} 0;
-`;
-
-const Sidebar = styled.div`
-  position: sticky;
-  top: 80px;
-`;
+import ArticleList from '@/pages/Home/c-cpns/ArticleList';
+import TagCloud from '@/pages/Home/c-cpns/TagCloud';
+import { HomeContainer, Sidebar } from './style';
+import { useSearchParams } from 'react-router-dom';
 
 const HomePage: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const tagIdParam = searchParams.get('tag');
+  const tagId = tagIdParam ? Number(tagIdParam) : undefined;
+  useEffect(() => {
+    dispatch(fetchArticles({ tagId }));
+  }, [tagId]);
+
   const dispatch = useAppDispatch();
   const { items, total, page, pageSize, loading } = useAppSelector((state) => state.articles);
 
@@ -43,7 +42,7 @@ const HomePage: React.FC = () => {
 
         <Col xs={24} lg={7}>
           <Sidebar>
-            <TagCloud maxTags={20} title="热门标签" />
+            <TagCloud maxTags={10} selectedTagId={tagId} title="热门标签" />
           </Sidebar>
         </Col>
       </Row>

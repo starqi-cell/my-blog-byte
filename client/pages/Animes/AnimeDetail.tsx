@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Spin } from 'antd';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { fetchAnimeById, clearCurrentAnime } from '../store/slices/animeSlice';
-import LazyImage from '../components/LazyImage';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fetchAnimeById, clearCurrentAnime } from '../../store/slices/animeSlice';
+import LazyImage from '../../components/LazyImage';
 
 const AnimeDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();

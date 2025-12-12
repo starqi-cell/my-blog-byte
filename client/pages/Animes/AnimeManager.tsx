@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { crawlFromBangumi, createAnime } from '../store/slices/animeSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { crawlFromBangumi, createAnime } from '../../store/slices/animeSlice';
 import type { Anime } from '@shared/types';
 
 const AnimeManager: React.FC = () => {

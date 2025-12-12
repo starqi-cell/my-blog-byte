@@ -12,7 +12,7 @@ import {
 
 } from '@ant-design/icons';
 import styled from 'styled-components';
-import { useAppSelector } from '../store/hooks';
+import { useAppSelector } from '../../store/hooks';
 import type { Article } from '@shared/types';
 
 const PageContainer = styled.div`

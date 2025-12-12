@@ -17,11 +17,11 @@ export async function getRedisClient(): Promise<RedisClientType> {
     });
 
     redisClient.on('error', (err) => {
-      console.error('❌ Redis 连接错误:', err.message);
+      console.error('Redis 连接错误:', err.message);
     });
 
     redisClient.on('connect', () => {
-      console.log('✅ Redis 已连接');
+      console.log('Redis 已连接');
     });
 
     try {
