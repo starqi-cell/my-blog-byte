@@ -10,8 +10,6 @@ import { Container, PageTitle, FilterBar, StyledSearch, StyledSelect, Pagination
 
 const { Option } = Select;
 
-
-
 const Articles: React.FC = () => {
   const dispatch = useAppDispatch();
   const { items, loading, total } = useAppSelector((state) => state.articles);

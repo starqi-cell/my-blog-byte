@@ -19,7 +19,7 @@ interface IProps {
 }
 
 const EditorMain: React.FC<IProps> = ({ 
-  content, onContentChange, onOpenAI, onAIGenerate, aiLoading 
+  content, onContentChange, onAIGenerate, aiLoading 
 }) => {
   const { uploadImage, loading: uploadLoading } = useImageUpload();
   const textAreaRef = useRef<any>(null);
@@ -44,9 +44,6 @@ const EditorMain: React.FC<IProps> = ({
     <EditorGrid>
       <div>
         <Toolbar>
-          <AIButton type="primary" icon={<RobotOutlined />} onClick={onOpenAI}>
-            AI 写作助手
-          </AIButton>
           <AIButton icon={<RobotOutlined />} onClick={onAIGenerate} loading={aiLoading}>
             AI 生成内容
           </AIButton>

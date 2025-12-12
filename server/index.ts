@@ -1,3 +1,6 @@
+// server/index.ts
+// 服务器入口文件
+
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import compression from 'compression';
@@ -7,7 +10,6 @@ import { fileURLToPath } from 'url';
 import { getPool, closePool } from './utils/database.js';
 import { getRedisClient, closeRedis } from './utils/redis.js';
 
-// 路由导入
 import authRoutes from './routes/auth.js';
 import articleRoutes from './routes/articles.js';
 import tagRoutes from './routes/tags.js';
@@ -16,7 +18,6 @@ import aiRoutes from './routes/ai.js';
 import uploadRoutes from './routes/upload.js';
 import animeRoutes from './routes/anime.js';
 
-// 限流中间件
 import { generalLimiter } from './middleware/rateLimit.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -106,23 +107,23 @@ async function bootstrap() {
   try {
     // 连接 MySQL
     getPool();
-    console.log('✅ MySQL 已连接');
+    console.log('MySQL 已连接');
 
     // 连接 Redis（可选，失败不影响服务器启动）
     try {
       await getRedisClient();
-      console.log('✅ Redis 已连接');
+      console.log('Redis 已连接');
     } catch (redisError) {
-      console.warn('⚠️  Redis 连接失败，缓存功能将被禁用:', redisError instanceof Error ? redisError.message : redisError);
-      console.log('ℹ️  服务器将继续运行，但缓存功能不可用');
+      console.warn('Redis 连接失败，缓存功能将被禁用:', redisError instanceof Error ? redisError.message : redisError);
+      console.log('ℹ服务器将继续运行，但缓存功能不可用');
     }
 
     // 启动服务器
     app.listen(PORT, () => {
       console.log(`
-🚀 服务器已启动
-📡 环境: ${NODE_ENV}
-🔗 API: http://localhost:${PORT}/api
+服务器已启动
+环境: ${NODE_ENV}
+API: http://localhost:${PORT}/api
 ${NODE_ENV === 'development' ? `🌐 前端: http://localhost:${process.env.CLIENT_PORT || 3000}` : ''}
       `);
     });
@@ -132,7 +133,6 @@ ${NODE_ENV === 'development' ? `🌐 前端: http://localhost:${process.env.CLIE
   }
 }
 
-// 优雅关闭
 process.on('SIGTERM', async () => {
   console.log('收到 SIGTERM 信号，正在关闭...');
   await closePool();

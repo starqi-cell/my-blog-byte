@@ -18,7 +18,6 @@ export const useArticleLogic = (id?: string) => {
   
   const isEdit = !!id;
 
-  // 初始化数据
   useEffect(() => {
     dispatch(fetchTags(false));
     if (id) {
@@ -26,7 +25,6 @@ export const useArticleLogic = (id?: string) => {
     }
   }, [id, dispatch]);
 
-  // 回填表单
   useEffect(() => {
     if (isEdit && currentArticle) {
       form.setFieldsValue({
@@ -36,7 +34,6 @@ export const useArticleLogic = (id?: string) => {
     }
   }, [currentArticle, isEdit, form]);
 
-  // 提交处理
   const handleSubmit = async (values: any) => {
     try {
       if (isEdit) {

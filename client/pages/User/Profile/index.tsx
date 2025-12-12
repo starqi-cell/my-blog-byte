@@ -1,40 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Card, Avatar, Descriptions, Button, List, Tag, Tabs, message } from 'antd';
+import { Card, Descriptions, Button, List, Tag, Tabs, message } from 'antd';
 import { UserOutlined, EditOutlined, FileTextOutlined } from '@ant-design/icons';
-import styled from 'styled-components';
-import { useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../../store/hooks';
 import type { Article } from '@shared/types';
-
-const ProfileContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: ${({ theme }) => theme.spacing.xl};
-`;
-
-const ProfileHeader = styled(Card)`
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
-  text-align: center;
-`;
-
-const UserAvatar = styled(Avatar)`
-  margin-bottom: ${({ theme }) => theme.spacing.md};
-`;
-
-const UserName = styled.h2`
-  color: ${({ theme }) => theme.colors.text};
-  margin-bottom: ${({ theme }) => theme.spacing.sm};
-`;
-
-const ArticleCard = styled(Card)`
-  cursor: pointer;
-  transition: all ${({ theme }) => theme.transition.normal};
-  
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 12px ${({ theme }) => theme.colors.shadow};
-  }
-`;
+import { ProfileContainer, ProfileHeader, UserAvatar, UserName, ArticleCard } from './style';
 
 const Profile: React.FC = () => {
   const navigate = useNavigate();

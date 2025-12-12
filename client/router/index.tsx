@@ -6,7 +6,7 @@ const HomePage = lazy(() => import('../pages/Home'));
 const Articles = lazy(() => import('../pages/Articles'));
 const ArticleDetail = lazy(() => import('../pages/Articles/c-cpns/ArticleDetail'));
 const ArticleEditor = lazy(() => import('../pages/Articles/c-cpns/ArticleEditor'));
-const Login = lazy(() => import('../pages/User/Login'));
+const Login = lazy(() => import('../pages/User/Login/Login'));
 const Register = lazy(() => import('../pages/User/Register'));
 const About = lazy(() => import('../pages/About'));
 const Profile = lazy(() => import('../pages/User/Profile'));

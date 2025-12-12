@@ -1,40 +1,11 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Card, message } from 'antd';
+import { Form, Input, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import { useAppDispatch } from '@/store/hooks';
 import { login } from '@/store/slices/authSlice';
+import { LoginContainer, LoginCard, Title, LoginButton, RegisterLink } from './style';
 
-const LoginContainer = styled.div`
-  min-height: calc(100vh - 200px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: ${({ theme }) => theme.spacing.lg};
-`;
-
-const LoginCard = styled(Card)`
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 4px 12px ${({ theme }) => theme.colors.shadow};
-`;
-
-const Title = styled.h2`
-  text-align: center;
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
-  color: ${({ theme }) => theme.colors.text};
-`;
-
-const LoginButton = styled(Button)`
-  width: 100%;
-`;
-
-const RegisterLink = styled.div`
-  text-align: center;
-  margin-top: ${({ theme }) => theme.spacing.md};
-  color: ${({ theme }) => theme.colors.textSecondary};
-`;
 
 const Login: React.FC = () => {
   const navigate = useNavigate();

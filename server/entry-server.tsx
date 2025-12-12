@@ -15,10 +15,6 @@ export async function render(url: string): Promise<RenderResult> {
   const sheet = new ServerStyleSheet();
 
   try {
-    // 预取数据（如果需要）
-    // 可以根据 URL 判断需要预取哪些数据
-    // await store.dispatch(fetchArticles({ page: 1, pageSize: 10 }));
-
     const html = renderToString(
       sheet.collectStyles(
         <Provider store={store}>
