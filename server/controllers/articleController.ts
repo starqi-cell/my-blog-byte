@@ -140,9 +140,9 @@ export async function updateArticle(req: Request, res: Response) {
       }
     }
 
-    // 清除相关缓存
+    // 清除相关缓存（列表与详情）
     await cacheDel('articles:*');
-    await cacheDel(`article:${id}:*`);
+    await cacheDel(`article:/api/articles/${id}`);
 
     res.json({ message: '文章更新成功' });
   } catch (error) {
@@ -171,9 +171,9 @@ export async function deleteArticle(req: Request, res: Response) {
     const isHardDelete = hard === 'true';
     await ArticleModel.delete(parseInt(id), !isHardDelete);
 
-    // 清除相关缓存
+    // 清除相关缓存（列表与详情）
     await cacheDel('articles:*');
-    await cacheDel(`article:${id}:*`);
+    await cacheDel(`article:/api/articles/${id}`);
 
     res.json({ message: '文章删除成功' });
   } catch (error) {
@@ -193,9 +193,10 @@ export async function likeArticle(req: Request, res: Response) {
 
     await ArticleModel.incrementLikeCount(parseInt(id));
 
-    // 清除相关缓存
-    await cacheDel(`article:${id}:*`);
-
+    // 清除相关缓存（详情与列表）
+    await cacheDel(`article:/api/articles/${id}`);
+    await cacheDel('articles:*');
+    console.log('点赞成功，已清除文章详情与列表缓存');
     res.json({ message: '点赞成功' });
   } catch (error) {
     console.error('点赞错误:', error);

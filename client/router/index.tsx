@@ -5,7 +5,7 @@ import { RouteObject } from 'react-router-dom';
 const HomePage = lazy(() => import('../pages/Home'));
 const Articles = lazy(() => import('../pages/Articles'));
 const ArticleDetail = lazy(() => import('../pages/Articles/c-cpns/ArticleDetail'));
-const ArticleEditor = lazy(() => import('../pages/ArticleEditor'));
+const ArticleEditor = lazy(() => import('../pages/Articles/c-cpns/ArticleEditor'));
 const Login = lazy(() => import('../pages/Login'));
 const Register = lazy(() => import('../pages/Register'));
 const About = lazy(() => import('../pages/About'));

@@ -68,7 +68,7 @@ export async function cacheSet(
 export async function cacheDel(pattern: string): Promise<void> {
   try {
     if (!redisClient) {
-      return; // Redis 不可用时静默返回
+      return; 
     }
     const client = await getRedisClient();
     const keys = await client.keys(pattern);
@@ -85,7 +85,7 @@ export async function closeRedis(): Promise<void> {
     try {
       await redisClient.quit();
       redisClient = null;
-      console.log('✅ Redis 已断开');
+      console.log('Redis 已断开');
     } catch (error) {
       console.error('Redis 关闭错误:', error);
       redisClient = null;

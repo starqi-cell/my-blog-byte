@@ -1,30 +1,17 @@
+// client/components/Comments/index.tsx
+// 评论组件
+
 import React, { useState } from 'react';
 import { Form, Input, Button, message, Empty } from 'antd';
-import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { createComment } from '@/store/slices/commentsSlice';
 import CommentItem from '../CommentItem';
 import type { Comment } from '@shared/types';
+import { CommentsContainer, CommentsTitle, CommentForm, CommentsList } from './style';
+
 
 const { TextArea } = Input;
 
-const CommentsContainer = styled.div`
-  margin-top: ${({ theme }) => theme.spacing.xl};
-`;
-
-const CommentsTitle = styled.h3`
-  font-size: ${({ theme }) => theme.fontSize.xl};
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
-  color: ${({ theme }) => theme.colors.text};
-`;
-
-const CommentForm = styled(Form)`
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
-`;
-
-const CommentsList = styled.div`
-  margin-top: ${({ theme }) => theme.spacing.lg};
-`;
 
 interface CommentsProps {
   articleId: number;

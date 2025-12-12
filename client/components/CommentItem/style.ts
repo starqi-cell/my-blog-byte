@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import { Button } from 'antd';
 
 export const CommentContainer = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.divider};

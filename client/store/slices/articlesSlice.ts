@@ -2,7 +2,10 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { Article, PaginatedResponse } from '@shared/types';
 
+
 const API_BASE = import.meta.env.VITE_API_BASE || '/api';
+
+
 
 interface ArticlesState {
   items: Article[];
@@ -108,6 +111,7 @@ export const deleteArticle = createAsyncThunk(
 
 export const likeArticle = createAsyncThunk('articles/like', async (id: number) => {
   await axios.post(`${API_BASE}/articles/${id}/like`);
+
   return id;
 });
 
@@ -159,11 +163,17 @@ const articlesSlice = createSlice({
       state.items = state.items.filter((item) => item.id !== action.payload);
     });
 
-    builder.addCase(likeArticle.fulfilled, (state, action: PayloadAction<number>) => {
-      const id = action.payload;
-      const article = state.items.find(item => item.id === id);
+    builder.addCase(likeArticle.pending, (state ) => {
+      const article = state.currentArticle;
       if (article) {
         article.like_count += 1;
+        // 可以加个标记 optimisticLike: true
+      }
+    });
+    builder.addCase(likeArticle.rejected, (state ) => {
+      const article = state.currentArticle;
+      if (article) {
+        article.like_count -= 1; // 回滚
       }
     });
   },

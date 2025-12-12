@@ -1,3 +1,6 @@
+// client/pages/Articles/c-cpns/ArticleDetail/components/ArticleContent.tsx/style.ts
+// 文章内容样式
+
 import styled from 'styled-components';
 import { Card } from 'antd';
 
@@ -44,6 +47,9 @@ export const CoverImage = styled.img`
   margin-bottom: ${({ theme }) => theme.spacing.xl};
 `;
 
+export const ArticleContentWrap = styled(Card)`
+  margin-bottom: ${({ theme }) => theme.spacing.xl};
+`;
 
 export const ArticleActions = styled.div`
   display: flex;
