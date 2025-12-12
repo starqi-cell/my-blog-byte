@@ -68,7 +68,6 @@ const LazyImage: React.FC<LazyImageProps> = ({
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // SSR 兼容：只在客户端使用 IntersectionObserver
     if (typeof window === 'undefined' || !wrapperRef.current) {
       return;
     }
@@ -83,7 +82,7 @@ const LazyImage: React.FC<LazyImageProps> = ({
         });
       },
       {
-        rootMargin: '50px', // 提前50px开始加载
+        rootMargin: '50px', 
         threshold: 0.01,
       }
     );
@@ -116,7 +115,7 @@ const LazyImage: React.FC<LazyImageProps> = ({
           $aspectRatio={aspectRatio}
           onLoad={handleLoad}
           onError={handleError}
-          loading="lazy" // 原生懒加载作为后备方案
+          loading="lazy" 
         />
       )}
     </ImageWrapper>

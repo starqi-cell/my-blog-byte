@@ -14,7 +14,7 @@ import {
 } from '@ant-design/icons';
 import { ArticleActions } from '../../style'; // 注意检查样式导入路径
 import { useAppDispatch } from '@/store/hooks';
-import { likeArticle, fetchArticleById, deleteArticle } from '@/store/slices/articlesSlice';
+import { likeArticle, deleteArticle } from '@/store/slices/articlesSlice';
 import { exportToPDF, exportToMarkdown, exportToText } from '@/utils/export';
 
 interface IProps {

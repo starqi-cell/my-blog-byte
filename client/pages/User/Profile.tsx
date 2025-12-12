@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card, Avatar, Descriptions, Button, List, Tag, Tabs, message } from 'antd';
 import { UserOutlined, EditOutlined, FileTextOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import { useAppSelector } from '../store/hooks';
+import { useAppSelector } from '../../store/hooks';
 import type { Article } from '@shared/types';
 
 const ProfileContainer = styled.div`

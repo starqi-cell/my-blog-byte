@@ -4,12 +4,12 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const AI_API_KEY = process.env.AI_API_KEY || 'cbc236e1-c18c-4e87-b2a6-15729a20fd1f';
-const AI_API_URL = process.env.AI_API_URL || 'https://api.openai.com/v1/chat/completions';
+const AI_API_URL = process.env.AI_API_URL || 'https://ark.cn-beijing.volces.com/api/v3/chat/completions';
 
 export interface AIGenerateOptions {
   type: 'content' | 'summary' | 'title' | 'polish' | 'generate' | 'complete';
   input: string;
-  context?: string; // 用于 generate 和 complete，提供上下文
+  context?: string;
   language?: string;
 }
 
@@ -39,26 +39,23 @@ export async function generateWithAI(options: AIGenerateOptions): Promise<string
       break;
   }
 
-  // 如果没有配置 AI API，返回模拟数据
   if (!AI_API_KEY) {
     return generateMockAI(type, input);
   }
 
   try {
+    // DeepSeek API 兼容
     const response = await axios.post(
       AI_API_URL,
       {
-        model: 'gpt-3.5-turbo',
+        model: 'deepseek-v3-2-251201',
         messages: [
-          {
-            role: 'system',
-            content: `你是一个专业的技术博客写作助手，擅长生成高质量的技术文章内容。请使用${language === 'zh-CN' ? '中文' : '英文'}回复。`,
-          },
           {
             role: 'user',
             content: prompt,
           },
         ],
+        // DeepSeek 支持 temperature/max_tokens，可按需传递
         temperature: 0.7,
         max_tokens: 2000,
       },
@@ -71,7 +68,11 @@ export async function generateWithAI(options: AIGenerateOptions): Promise<string
       }
     );
 
-    return response.data.choices[0]?.message?.content || '生成失败';
+    // DeepSeek 返回结构兼容
+    if (response.data && response.data.choices && response.data.choices[0]?.message?.content) {
+      return response.data.choices[0].message.content;
+    }
+    return '生成失败';
   } catch (error) {
     console.error('AI 生成错误:', error);
     return generateMockAI(type, input);

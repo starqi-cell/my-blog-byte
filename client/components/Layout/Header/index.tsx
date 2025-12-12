@@ -1,68 +1,14 @@
 import React from 'react';
-import { Layout, Button, Space, Avatar, Dropdown } from 'antd';
+import { Button, Space, Avatar, Dropdown } from 'antd';
 import { MenuOutlined, UserOutlined, LoginOutlined, LogoutOutlined, BulbOutlined } from '@ant-design/icons';
-import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { logout } from '@/store/slices/authSlice';
 import { toggleTheme } from '@/store/slices/uiSlice';
 
-const { Header: AntHeader } = Layout;
+import { StyledHeader, Logo, Nav, NavLink } from './style';
 
-const StyledHeader = styled(AntHeader)`
-  background-color: ${({ theme }) => theme.colors.surface} !important;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
-  padding: 0 ${({ theme }) => theme.spacing.lg};
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 8px ${({ theme }) => theme.colors.shadow};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding: 0 ${({ theme }) => theme.spacing.md};
-  }
-`;
-
-const Logo = styled(Link)`
-  font-size: ${({ theme }) => theme.fontSize.xl};
-  font-weight: ${({ theme }) => theme.fontWeight.bold};
-  color: ${({ theme }) => theme.colors.primary} !important;
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing.sm};
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.primaryHover} !important;
-  }
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing.md};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    gap: ${({ theme }) => theme.spacing.sm};
-  }
-`;
-
-const NavLink = styled(Link)`
-  font-size: ${({ theme }) => theme.fontSize.md};
-  color: ${({ theme }) => theme.colors.text};
-  padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
-  transition: color ${({ theme }) => theme.transition.fast};
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.primary};
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    display: none;
-  }
-`;
 
 const Header: React.FC = () => {
   const navigate = useNavigate();

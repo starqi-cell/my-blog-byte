@@ -1,5 +1,8 @@
+// client/pages/Articles/c-cpns/ArticleDetail/style.ts
+// 文章详情页样式文件
+
+
 import styled from 'styled-components';
-import { Card } from 'antd';
 
 export const ArticleContainer = styled.div`
   max-width: 900px;

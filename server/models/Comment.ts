@@ -10,7 +10,6 @@ export interface Comment extends RowDataPacket {
   status: 'approved' | 'pending' | 'deleted';
   created_at: Date;
   updated_at: Date;
-  // 关联数据
   user_name?: string;
   user_avatar?: string;
   replies?: Comment[];

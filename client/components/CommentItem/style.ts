@@ -1,3 +1,7 @@
+// client/components/CommentItem/style.ts
+// 评论项组件样式文件
+
+
 import styled from 'styled-components';
 import { Button } from 'antd';
 
