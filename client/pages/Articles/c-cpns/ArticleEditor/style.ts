@@ -1,4 +1,6 @@
 // client/pages/ArticleEditor/style.ts
+// 文章编辑器样式文件
+
 import styled from 'styled-components';
 import { Button, Card } from 'antd';
 

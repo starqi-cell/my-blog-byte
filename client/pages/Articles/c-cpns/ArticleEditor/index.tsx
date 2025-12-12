@@ -1,4 +1,6 @@
 // client/pages/ArticleEditor/index.tsx
+// 文章编辑器页面
+
 import React, { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -16,15 +18,12 @@ const ArticleEditor: React.FC = () => {
   const navigate = useNavigate();
   const { token } = useAppSelector((state) => state.auth);
   
-  // Custom Hooks
   const { form, tags, loading, handleSubmit, isEdit } = useArticleLogic(id);
 
-  // Local UI State
   const [content, setContent] = useState('');
   const [coverImageUrl, setCoverImageUrl] = useState('');
   const [aiLoading, setAiLoading] = useState(false);
 
-  // 监听 Form 变化同步本地 state (用于预览)
   const handleContentChange = (newContent: string) => {
     setContent(newContent);
     form.setFieldsValue({ content: newContent });
