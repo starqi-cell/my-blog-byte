@@ -22,8 +22,6 @@ const ArticleEditor: React.FC = () => {
   // Local UI State
   const [content, setContent] = useState('');
   const [coverImageUrl, setCoverImageUrl] = useState('');
-  const [aiAssistantVisible, setAiAssistantVisible] = useState(false);
-  const [selectedText, setSelectedText] = useState('');
   const [aiLoading, setAiLoading] = useState(false);
 
   // 监听 Form 变化同步本地 state (用于预览)
@@ -37,13 +35,7 @@ const ArticleEditor: React.FC = () => {
     form.setFieldsValue({ cover_image: url });
   };
 
-  // AI 相关逻辑
-  const handleOpenAIAssistant = () => {
-    // 简单获取选区，实际建议传递 Ref
-    const selection = window.getSelection()?.toString() || '';
-    setSelectedText(selection);
-    setAiAssistantVisible(true);
-  };
+
 
   const handleAIGenerate = async (type: 'content' | 'summary') => {
     const title = form.getFieldValue('title');
@@ -85,7 +77,6 @@ const ArticleEditor: React.FC = () => {
         <EditorMain 
           content={content}
           onContentChange={handleContentChange}
-          onOpenAI={handleOpenAIAssistant}
           onAIGenerate={() => handleAIGenerate('content')}
           aiLoading={aiLoading}
         />

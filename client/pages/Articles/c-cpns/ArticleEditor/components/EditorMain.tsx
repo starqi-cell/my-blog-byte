@@ -13,7 +13,6 @@ const { TextArea } = Input;
 interface IProps {
   content: string;
   onContentChange: (val: string) => void;
-  onOpenAI: () => void;
   onAIGenerate: () => void;
   aiLoading: boolean;
 }
