@@ -1,54 +1,14 @@
+// client/components/LazyImage/index.tsx
+// 懒加载图片组件
+
 import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
 
-const ImageWrapper = styled.div<{ $aspectRatio?: number }>`
-  position: relative;
-  overflow: hidden;
-  background-color: ${({ theme }) => theme.colors.divider};
-  ${({ $aspectRatio }) => $aspectRatio && `padding-bottom: ${100 / $aspectRatio}%;`}
-`;
-
-interface StyledImageProps {
-  $loaded: boolean;
-  $aspectRatio?: number;
-}
-
-const StyledImage = styled.img<StyledImageProps>`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  ${(props) => props.$aspectRatio && 'position: absolute; top: 0; left: 0;'}
-  opacity: ${(props) => (props.$loaded ? 1 : 0)};
-  transition: opacity 0.3s ease-in-out;
-`;
-
-const Placeholder = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-
-  @keyframes loading {
-    0% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
-  }
-`;
+import { ImageWrapper, StyledImage, Placeholder } from './style';
 
 interface LazyImageProps {
   src: string;
   alt: string;
-  aspectRatio?: number; // 宽高比，例如 16/9
+  aspectRatio?: number; 
   className?: string;
   onLoad?: () => void;
   onError?: () => void;
