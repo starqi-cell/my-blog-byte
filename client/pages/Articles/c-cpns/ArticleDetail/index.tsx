@@ -15,6 +15,8 @@ import Comments from '@/components/Comments';
 import ArticleContent from "./components/ArticleContent.tsx"; 
 import ArticleActionBar from './components/ArticleActionBar.tsx';
 
+import type { RootState } from '@/store/index.ts';
+
 import {
   ArticleContainer,
   LoadingContainer,
@@ -27,7 +29,11 @@ const ArticleDetail: React.FC = () => {
 
   const { currentArticle: article, loading } = useAppSelector((state) => state.articles);
   const { items: comments } = useAppSelector((state) => state.comments);
-  const { user } = useAppSelector((state) => state.auth);
+
+
+
+  
+  const { user } = useAppSelector((state: RootState) => state.auth);
 
   const contentRef = useRef<HTMLDivElement>(null);
 

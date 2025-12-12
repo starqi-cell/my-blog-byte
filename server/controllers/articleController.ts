@@ -75,7 +75,7 @@ export async function createArticle(req: Request, res: Response) {
 
     // 添加标签
     if (tags && Array.isArray(tags) && tags.length > 0) {
-      // 检查是否是标签名称数组（字符串）还是标签 ID 数组（数字）
+      // 检查是否是标签名称数组还是标签 ID 数组
       if (typeof tags[0] === 'string') {
         await ArticleModel.addTagsByNames(articleId, tags);
       } else {
@@ -108,7 +108,7 @@ export async function updateArticle(req: Request, res: Response) {
       return res.status(404).json({ message: '文章不存在' });
     }
 
-    // 检查权限（只有作者本人或管理员可以编辑）
+    // 检查权限
     if (article.author_id !== userId && userRole !== 'admin') {
       return res.status(403).json({ message: '权限不足' });
     }
@@ -131,7 +131,7 @@ export async function updateArticle(req: Request, res: Response) {
     if (tags !== undefined && Array.isArray(tags)) {
       await ArticleModel.removeTags(parseInt(id));
       if (tags.length > 0) {
-        // 检查是否是标签名称数组（字符串）还是标签 ID 数组（数字）
+        // 检查是否是标签名称数组还是标签 ID 数组
         if (typeof tags[0] === 'string') {
           await ArticleModel.addTagsByNames(parseInt(id), tags);
         } else {
@@ -171,7 +171,7 @@ export async function deleteArticle(req: Request, res: Response) {
     const isHardDelete = hard === 'true';
     await ArticleModel.delete(parseInt(id), !isHardDelete);
 
-    // 清除相关缓存（列表与详情）
+    // 清除相关缓存
     await cacheDel('articles:*');
     await cacheDel(`article:/api/articles/${id}`);
 
@@ -193,7 +193,7 @@ export async function likeArticle(req: Request, res: Response) {
 
     await ArticleModel.incrementLikeCount(parseInt(id));
 
-    // 清除相关缓存（详情与列表）
+    // 清除相关缓存
     await cacheDel(`article:/api/articles/${id}`);
     await cacheDel('articles:*');
     console.log('点赞成功，已清除文章详情与列表缓存');

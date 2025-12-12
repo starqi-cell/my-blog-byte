@@ -20,7 +20,7 @@ export function getPool(): mysql.Pool {
       keepAliveInitialDelay: 0,
     });
 
-    console.log('✅ MySQL 连接池已创建');
+    console.log('MySQL 连接池已创建');
   }
 
   return pool;
@@ -43,6 +43,6 @@ export async function closePool(): Promise<void> {
   if (pool) {
     await pool.end();
     pool = null;
-    console.log('✅ MySQL 连接池已关闭');
+    console.log('MySQL 连接池已关闭');
   }
 }

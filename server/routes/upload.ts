@@ -5,10 +5,8 @@ import { authenticate } from '../middleware/auth.js';
 
 const router = express.Router();
 
-// 上传图片（需要登录）
 router.post('/image', authenticate, upload.single('image'), uploadImage);
 
-// 删除图片（需要登录）
 router.delete('/image/:filename', authenticate, deleteImage);
 
 export default router;

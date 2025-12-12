@@ -14,7 +14,7 @@ export interface AIGenerateOptions {
 }
 
 export async function generateWithAI(options: AIGenerateOptions): Promise<string> {
-  const { type, input, context, language = 'zh-CN' } = options;
+  const { type, input, context } = options;
 
   let prompt = '';
   
@@ -44,7 +44,6 @@ export async function generateWithAI(options: AIGenerateOptions): Promise<string
   }
 
   try {
-    // DeepSeek API 兼容
     const response = await axios.post(
       AI_API_URL,
       {
@@ -55,7 +54,6 @@ export async function generateWithAI(options: AIGenerateOptions): Promise<string
             content: prompt,
           },
         ],
-        // DeepSeek 支持 temperature/max_tokens，可按需传递
         temperature: 0.7,
         max_tokens: 2000,
       },
@@ -68,7 +66,6 @@ export async function generateWithAI(options: AIGenerateOptions): Promise<string
       }
     );
 
-    // DeepSeek 返回结构兼容
     if (response.data && response.data.choices && response.data.choices[0]?.message?.content) {
       return response.data.choices[0].message.content;
     }

@@ -11,7 +11,7 @@ export async function getRedisClient(): Promise<RedisClientType> {
       socket: {
         host: process.env.REDIS_HOST || 'localhost',
         port: parseInt(process.env.REDIS_PORT || '6379'),
-        connectTimeout: 5000, // 5秒超时
+        connectTimeout: 5000, 
       },
       password: process.env.REDIS_PASSWORD || undefined,
     });
@@ -38,7 +38,7 @@ export async function getRedisClient(): Promise<RedisClientType> {
 export async function cacheGet<T = any>(key: string): Promise<T | null> {
   try {
     if (!redisClient) {
-      return null; // Redis 不可用时返回 null
+      return null; 
     }
     const client = await getRedisClient();
     const data = await client.get(key);
@@ -56,7 +56,7 @@ export async function cacheSet(
 ): Promise<void> {
   try {
     if (!redisClient) {
-      return; // Redis 不可用时静默返回
+      return; 
     }
     const client = await getRedisClient();
     await client.setEx(key, ttl, JSON.stringify(value));

@@ -102,14 +102,12 @@ if (NODE_ENV === 'production') {
   });
 }
 
-// 初始化数据库和 Redis 连接
 async function bootstrap() {
   try {
     // 连接 MySQL
     getPool();
     console.log('MySQL 已连接');
 
-    // 连接 Redis（可选，失败不影响服务器启动）
     try {
       await getRedisClient();
       console.log('Redis 已连接');
@@ -118,17 +116,16 @@ async function bootstrap() {
       console.log('ℹ服务器将继续运行，但缓存功能不可用');
     }
 
-    // 启动服务器
     app.listen(PORT, () => {
       console.log(`
 服务器已启动
 环境: ${NODE_ENV}
 API: http://localhost:${PORT}/api
-${NODE_ENV === 'development' ? `🌐 前端: http://localhost:${process.env.CLIENT_PORT || 3000}` : ''}
+${NODE_ENV === 'development' ? `前端: http://localhost:${process.env.CLIENT_PORT || 3000}` : ''}
       `);
     });
   } catch (error) {
-    console.error('❌ 服务器启动失败:', error);
+    console.error('服务器启动失败:', error);
     process.exit(1);
   }
 }
