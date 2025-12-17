@@ -6,7 +6,6 @@ import { Form, Input, Button, message } from 'antd';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-// Imports from separated files
 import { EditorContainer } from './style';
 import { useArticleLogic } from './hooks/useArticleLogic';
 import EditorMain from './components/EditorMain';
@@ -44,10 +43,16 @@ const ArticleEditor: React.FC = () => {
     setAiLoading(true);
     try {
       const API_BASE = import.meta.env.VITE_API_BASE || '/api';
-      const res = await axios.post(`${API_BASE}/ai/generate`, {
-        type,
-        input: type === 'content' ? title : content,
-      }, { headers: { Authorization: `Bearer ${token}` } });
+      const res = await axios.post(
+        `${API_BASE}/ai/generate`, 
+        {
+          type,
+          input: type === 'content' ? title : content,
+        }, 
+        { 
+          headers: { Authorization: `Bearer ${token}` } 
+        }
+      );
 
       const result = res.data.result;
       if (type === 'content') {

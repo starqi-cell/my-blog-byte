@@ -27,12 +27,16 @@ export const useImageUpload = () => {
       formData.append('image', file);
       
       const API_BASE = import.meta.env.VITE_API_BASE || '/api';
-      const response = await axios.post(`${API_BASE}/upload/image`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post(
+        `${API_BASE}/upload/image`, 
+        formData, 
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.data.success) {
         return `http://localhost:4000${response.data.url}`;

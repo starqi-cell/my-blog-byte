@@ -9,7 +9,6 @@ import {
   LikeOutlined,
   DeleteOutlined,
   CheckOutlined,
-
 } from '@ant-design/icons';
 import styled from 'styled-components';
 import { useAppSelector } from '../../store/hooks';

@@ -27,7 +27,6 @@ const AppContent: React.FC = () => {
       dispatch(fetchProfile());
     }
   }, [token, user, dispatch]);
-  const API_BASE = import.meta.env.VITE_API_BASE || '/api';
 
   return (
     <ThemeProvider theme={currentTheme}>

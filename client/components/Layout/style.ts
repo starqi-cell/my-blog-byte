@@ -1,3 +1,6 @@
+// client/components/Layout/style.ts
+// 布局组件样式
+
 import { Layout } from 'antd';
 import styled from 'styled-components';
 

@@ -1,7 +1,7 @@
 // client/components/Comments/index.tsx
 // 评论组件
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Form, Input, Button, message, Empty } from 'antd';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { createComment } from '@/store/slices/commentsSlice';
@@ -9,9 +9,7 @@ import CommentItem from '../CommentItem';
 import type { Comment } from '@shared/types';
 import { CommentsContainer, CommentsTitle, CommentForm, CommentsList } from './style';
 
-
 const { TextArea } = Input;
-
 
 interface CommentsProps {
   articleId: number;
@@ -26,12 +24,12 @@ const Comments: React.FC<CommentsProps> = ({ articleId, comments, onCommentAdded
   const [loading, setLoading] = useState(false);
   const [replyToId, setReplyToId] = useState<number | null>(null);
 
+  // 提交评论
   const handleSubmit = async (values: { content: string }) => {
     if (!user) {
       message.warning('请先登录后再评论');
       return;
     }
-
     setLoading(true);
     try {
       await dispatch(
@@ -41,15 +39,11 @@ const Comments: React.FC<CommentsProps> = ({ articleId, comments, onCommentAdded
           parent_id: replyToId || undefined,
         })
       ).unwrap();
-
       form.resetFields();
       setReplyToId(null);
-      
-      // 立即重新获取评论列表
       if (onCommentAdded) {
         await onCommentAdded();
       }
-      
       message.success('评论发表成功');
     } catch (error: any) {
       message.error(error || '评论发表失败');
@@ -58,13 +52,13 @@ const Comments: React.FC<CommentsProps> = ({ articleId, comments, onCommentAdded
     }
   };
 
-  const handleReply = (commentId: number) => {
+  const handleReply = useCallback((commentId: number) => {
     if (!user) {
       message.warning('请先登录后再回复');
       return;
     }
     setReplyToId(commentId);
-  };
+  }, [user]);
 
   return (
     <CommentsContainer>

@@ -24,14 +24,16 @@ const LazyImage: React.FC<LazyImageProps> = ({
 }) => {
   const [loaded, setLoaded] = useState(false);
   const [inView, setInView] = useState(false);
+
+  // 监听图片是否进入视口
   const imgRef = useRef<HTMLImageElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
+  // 当组件挂载时，开始观察是否进入视口，使用 Intersection Observer 监听图片进入视口
   useEffect(() => {
     if (typeof window === 'undefined' || !wrapperRef.current) {
       return;
     }
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -41,14 +43,14 @@ const LazyImage: React.FC<LazyImageProps> = ({
           }
         });
       },
+      // 50px 的预加载距离
       {
         rootMargin: '50px', 
         threshold: 0.01,
       }
     );
-
+    // 开始观察图片容器是否进入视口
     observer.observe(wrapperRef.current);
-
     return () => {
       observer.disconnect();
     };

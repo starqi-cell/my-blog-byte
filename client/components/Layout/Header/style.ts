@@ -1,3 +1,6 @@
+// client/components/Layout/Header/style.ts
+// 头部组件样式
+
 import styled from 'styled-components';
 import { Layout } from 'antd';
 import { Link } from 'react-router-dom';

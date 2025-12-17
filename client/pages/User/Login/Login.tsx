@@ -1,3 +1,6 @@
+// client/pages/User/Login/Login.tsx
+// 登录页面
+
 import React, { useState } from 'react';
 import { Form, Input, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
@@ -5,7 +8,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '@/store/hooks';
 import { login } from '@/store/slices/authSlice';
 import { LoginContainer, LoginCard, Title, LoginButton, RegisterLink } from './style';
-
 
 const Login: React.FC = () => {
   const navigate = useNavigate();

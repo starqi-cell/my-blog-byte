@@ -1,7 +1,9 @@
+// client/components/Layout/Footer/Footer.tsx
+// 页脚组件
+
 import React from 'react';
 import { GithubOutlined } from '@ant-design/icons';
-import { StyledFooter, FooterContent, SocialLinks, Copyright } from '.';
-
+import { StyledFooter, FooterContent, SocialLinks, Copyright } from './style';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();

@@ -1,3 +1,6 @@
+// client/pages/User/Register/index.tsx
+// 注册页面
+
 import React, { useState } from 'react';
 import { Form, Input, message } from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';

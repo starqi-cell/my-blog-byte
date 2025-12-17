@@ -1,3 +1,6 @@
+// client/pages/Home/style.ts
+// 主页样式
+
 import styled from 'styled-components';
 
 export const HomeContainer = styled.div`

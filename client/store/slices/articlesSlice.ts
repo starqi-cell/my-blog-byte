@@ -1,11 +1,11 @@
+// client/store/slices/articlesSlice.ts
+// 文章切片，包含文章相关的状态和异步操作
+
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { Article, PaginatedResponse } from '@shared/types';
 
-
 const API_BASE = import.meta.env.VITE_API_BASE || '/api';
-
-
 
 interface ArticlesState {
   items: Article[];
@@ -64,9 +64,13 @@ export const createArticle = createAsyncThunk(
     try {
       const state = getState() as any;
       const token = state.auth.token;
-      const response = await axios.post(`${API_BASE}/articles`, data, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.post(
+        `${API_BASE}/articles`, 
+        data, 
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+     );
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || '创建文章失败');
@@ -127,7 +131,7 @@ const articlesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Fetch list
+    // 获取列表
     builder.addCase(fetchArticles.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -144,7 +148,7 @@ const articlesSlice = createSlice({
       state.error = action.error.message || '获取文章列表失败';
     });
 
-    // Fetch by ID
+    // 通过ID获取
     builder.addCase(fetchArticleById.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -158,11 +162,11 @@ const articlesSlice = createSlice({
       state.error = action.error.message || '获取文章详情失败';
     });
 
-    // Delete
+    // 删除文章
     builder.addCase(deleteArticle.fulfilled, (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
     });
-
+    
     builder.addCase(likeArticle.pending, (state ) => {
       const article = state.currentArticle;
       if (article) {

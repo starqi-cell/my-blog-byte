@@ -12,7 +12,7 @@ import {
   DeleteOutlined,
   DownloadOutlined,
 } from '@ant-design/icons';
-import { ArticleActions } from '../../style'; // 注意检查样式导入路径
+import { ArticleActions } from '../../style'; 
 import { useAppDispatch } from '@/store/hooks';
 import { likeArticle, deleteArticle } from '@/store/slices/articlesSlice';
 import { exportToPDF, exportToMarkdown, exportToText } from '@/utils/export';
@@ -22,7 +22,6 @@ interface IProps {
   article?: any;
   canEdit?: boolean | null;
   id?: string;
-  // 接收父组件传来的 ref
   contentRef?: RefObject<HTMLDivElement>;
 }
 
@@ -59,7 +58,6 @@ const ArticleActionBar: FC<IProps> = memo((props) => {
   };
 
   const handleExport = async (type: 'pdf' | 'markdown' | 'text') => {
-    // 关键校验：确保 article 和 ref.current 均存在
     if (!article || !contentRef || !contentRef.current) {
         if(!contentRef?.current) console.warn("DOM Ref is missing");
         return;

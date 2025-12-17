@@ -1,3 +1,6 @@
+// client/pages/Home/c-cpns/TagCloud/style.ts
+// 标签云组件样式
+
 import styled from 'styled-components';
 import { Card, Tag } from 'antd';
 

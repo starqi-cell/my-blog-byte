@@ -175,9 +175,6 @@ export async function exportToPDF(article: Article, contentElement: HTMLElement)
 export function exportToMarkdown(article: Article): void {
   try {
     const publishDate = new Date(article.published_at || article.created_at).toLocaleString('zh-CN');
-    const tagsSection = article.tags && article.tags.length > 0 
-      ? `\n**标签:** ${article.tags.map(tag => `\`${tag}\``).join(' ')}\n` 
-      : '';
     const contentWithoutImages = article.content.replace(/!\[.*?\]\(.*?\)/g, '');
     const markdown = `# ${article.title}
 

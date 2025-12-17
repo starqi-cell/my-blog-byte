@@ -1,6 +1,8 @@
+// client/router/index.tsx
+// 应用路由配置
+
 import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
-
 
 const HomePage = lazy(() => import('../pages/Home'));
 const Articles = lazy(() => import('../pages/Articles'));

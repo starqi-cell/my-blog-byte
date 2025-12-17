@@ -1,3 +1,6 @@
+// client/store/slices/authSlice.ts
+// 认证切片，包含用户登录、注册和信息获取的状态和异步操作
+
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { User, AuthResponse } from '@shared/types';
@@ -82,7 +85,7 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Login
+    // 登录
     builder.addCase(login.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -100,7 +103,7 @@ const authSlice = createSlice({
       state.error = action.payload as string;
     });
 
-    // Register
+    // 注册
     builder.addCase(register.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -118,7 +121,7 @@ const authSlice = createSlice({
       state.error = action.payload as string;
     });
 
-    // Profile
+    // 获取用户信息
     builder.addCase(fetchProfile.pending, (state) => {
       state.loading = true;
     });

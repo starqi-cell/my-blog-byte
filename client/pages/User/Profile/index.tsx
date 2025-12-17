@@ -1,3 +1,6 @@
+// client/pages/User/Profile/index.tsx
+// 用户个人资料页面
+
 import  { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card, Descriptions, Button, List, Tag, Tabs, message } from 'antd';
@@ -25,7 +28,6 @@ const Profile: React.FC = () => {
 
   const loadMyArticles = async () => {
     if (!user) return;
-    
     setLoading(true);
     try {
       const token = localStorage.getItem('token');

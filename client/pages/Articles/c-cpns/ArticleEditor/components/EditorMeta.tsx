@@ -1,4 +1,6 @@
 // client/pages/ArticleEditor/components/EditorMeta.tsx
+// 文章编辑器元信息组件
+
 import React from 'react';
 import { Form, Input, Upload, Select } from 'antd';
 import { PlusOutlined, RobotOutlined } from '@ant-design/icons';

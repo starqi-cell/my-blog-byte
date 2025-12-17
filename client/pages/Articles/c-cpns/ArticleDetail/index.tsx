@@ -1,7 +1,6 @@
 // client/pages/Articles/c-cpns/ArticleDetail/index.tsx
 // 文章详情页组件
 
-
 import React, { useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button, Divider, Spin } from 'antd';
@@ -15,7 +14,6 @@ import Comments from '@/components/Comments';
 import ArticleContent from "./components/ArticleContent.tsx"; 
 import ArticleActionBar from './components/ArticleActionBar.tsx';
 
-import type { RootState } from '@/store/index.ts';
 
 import {
   ArticleContainer,
@@ -24,19 +22,14 @@ import {
 
 const ArticleDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const { currentArticle: article, loading } = useAppSelector((state) => state.articles);
   const { items: comments } = useAppSelector((state) => state.comments);
-
-
-
-  
-  const { user } = useAppSelector((state: RootState) => state.auth);
-
+  const { user } = useAppSelector(state => state.auth);
   const contentRef = useRef<HTMLDivElement>(null);
-
 
   useEffect(() => {
     if (id) {
@@ -87,7 +80,7 @@ const ArticleDetail: React.FC = () => {
       >
         返回
       </Button>
-
+      
       <ArticleContent ref={contentRef} article={article} />
 
       <ArticleActionBar

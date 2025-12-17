@@ -11,8 +11,6 @@ import { StyledCard, ArticleTitle, ArticleMeta, MetaItem, ArticleSummary, TagsCo
 
 const { Text } = Typography;
 
-
-
 interface ArticleCardProps {
   article: Article;
 }

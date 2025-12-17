@@ -1,3 +1,6 @@
+// client/store/slices/commentsSlice.ts
+// 评论切片，包含评论相关的状态和异步操作
+
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { Comment } from '@shared/types';

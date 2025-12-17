@@ -1,3 +1,6 @@
+// client/store/slices/tagsSlice.ts
+// 标签切片，包含标签相关的状态和异步操作
+
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { Tag } from '@shared/types';

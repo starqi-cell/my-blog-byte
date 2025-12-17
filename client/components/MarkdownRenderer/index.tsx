@@ -1,3 +1,6 @@
+// client/components/MarkdownRenderer/index.tsx
+// Markdown 渲染组件
+
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';

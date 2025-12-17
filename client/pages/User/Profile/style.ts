@@ -1,3 +1,6 @@
+// client/pages/User/Profile/style.ts
+// 用户个人资料页面样式
+
 import styled from 'styled-components';
 import { Card, Avatar } from 'antd';
 

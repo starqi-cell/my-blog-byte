@@ -1,3 +1,6 @@
+// client/components/Layout/Header/index.tsx
+// 头部组件
+
 import React from 'react';
 import { Button, Space, Avatar, Dropdown } from 'antd';
 import { MenuOutlined, UserOutlined, LoginOutlined, LogoutOutlined, BulbOutlined } from '@ant-design/icons';

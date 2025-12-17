@@ -1,6 +1,8 @@
+// client/pages/User/Register/style.ts
+// 注册页面样式
+
 import styled from 'styled-components';
 import { Card, Button } from 'antd';
-
 
 export const RegisterContainer = styled.div`
   min-height: calc(100vh - 200px);

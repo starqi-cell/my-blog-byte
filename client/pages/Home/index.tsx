@@ -1,3 +1,6 @@
+// client/pages/Home/index.tsx
+// 主页
+
 import React, { useEffect } from 'react';
 import { Row, Col } from 'antd';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
